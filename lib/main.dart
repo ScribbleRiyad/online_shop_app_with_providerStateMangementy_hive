@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:online_shop/Provider/mainpage_provider.dart';
+import 'package:provider/provider.dart';
 import 'View/Presentations/mainpage.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => MainPageProvider()),
+  ], child: const OnlineShopApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class OnlineShopApp extends StatelessWidget {
+  const OnlineShopApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MainScreen(),
+      home: MainScreen(),
     );
   }
 }
