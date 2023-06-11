@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         labelColor: Colors.white,
                         labelStyle: appStyle(20, Colors.white, FontWeight.bold),
                         controller: _tabController,
-                        unselectedLabelColor: Colors.grey.withOpacity(0.5),
+                        unselectedLabelColor: Colors.grey.withOpacity(0.3),
                         tabs: const [
                           Tab(
                             child: Text("Men Shoes"),
