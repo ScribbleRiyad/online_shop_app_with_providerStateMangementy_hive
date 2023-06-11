@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop/%20Widgets/appStyle.dart';
+import 'package:online_shop/%20Widgets/product_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,6 +41,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           30, Colors.white, FontWeight.bold, 1.5),
                     ),
                     TabBar(
+                        padding: EdgeInsets.zero,
                         indicatorSize: TabBarIndicatorSize.label,
                         indicatorColor: Colors.transparent,
                         isScrollable: true,
@@ -49,13 +51,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         unselectedLabelColor: Colors.grey.withOpacity(0.5),
                         tabs: const [
                           Tab(
-                            child: Text("Men Shoe"),
+                            child: Text("Men Shoes"),
                           ),
                           Tab(
-                            child: Text("Women Shoe"),
+                            child: Text("Women Shoes"),
                           ),
                           Tab(
-                            child: Text("Kids Shoe"),
+                            child: Text("Kids Shoes"),
                           ),
                         ]),
                   ],
@@ -76,14 +78,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             itemCount: 6,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  color: Colors.grey,
-                                  height: MediaQuery.of(context).size.height,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.6,
-                                ),
+                              return const ProductCart(
+                                id: '01',
+                                image:
+                                    'https://d326fntlu7tb1e.cloudfront.net/uploads/710d020f-2da8-4e9e-8cff-0c8f24581488-GV6674.webp',
+                                category: 'Mens Shoe',
+                                price: '\$200',
+                                name: 'Ultra Boost Z6',
                               );
                             }),
                       ),
@@ -130,7 +131,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                               Radius.circular(16)),
                                           boxShadow: [
                                             BoxShadow(
-                                                color: Colors.black38,
+                                                color: Colors.white,
                                                 blurRadius: 0.8,
                                                 offset: Offset(0, 1),
                                                 spreadRadius: 1),

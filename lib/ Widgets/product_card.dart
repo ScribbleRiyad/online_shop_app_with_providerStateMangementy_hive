@@ -28,7 +28,7 @@ class _ProductCartState extends State<ProductCart> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         8,
-        0,
+        20,
         20,
         0,
       ),
@@ -36,7 +36,7 @@ class _ProductCartState extends State<ProductCart> {
         borderRadius: const BorderRadius.all(Radius.circular(16)),
         child: Container(
           height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width * 0.26,
+          width: MediaQuery.of(context).size.width * 0.6,
           decoration: const BoxDecoration(color: Colors.white, boxShadow: [
             BoxShadow(
                 blurRadius: 06,
@@ -97,7 +97,7 @@ class _ProductCartState extends State<ProductCart> {
                         Text(
                           "Colors",
                           style: appStyleWithHt(
-                              16, Colors.grey, FontWeight.bold, 1.1),
+                              18, Colors.grey, FontWeight.bold, 1.1),
                         ),
                         const SizedBox(
                           width: 5,
@@ -105,7 +105,7 @@ class _ProductCartState extends State<ProductCart> {
                         ChoiceChip(
                           label: const Text(""),
                           selected: selected,
-                          visualDensity: VisualDensity.comfortable,
+                          visualDensity: VisualDensity.compact,
                           selectedColor: Colors.black,
                         ),
                       ],
