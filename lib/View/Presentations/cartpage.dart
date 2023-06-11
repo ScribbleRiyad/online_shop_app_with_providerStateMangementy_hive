@@ -13,6 +13,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFE2E2E2),
       body: Center(
         child: Text(
           'This is Cart',
