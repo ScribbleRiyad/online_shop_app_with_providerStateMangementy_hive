@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:online_shop/View/Presentations/cartpage.dart';
+import 'package:online_shop/View/Presentations/homepage.dart';
+import 'package:online_shop/View/Presentations/profilepage.dart';
+import 'package:online_shop/View/Presentations/searchpage.dart';
 import '../../ Widgets/bottomnav_icon.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({super.key});
-  List<Widget> pageList = [];
+  List<Widget> pageList = [
+    const HomePage(),
+    const SearchPage(),
+    const HomePage(),
+    const CartPage(),
+    const ProfilePage(),
+  ];
   @override
   Widget build(BuildContext context) {
     int pageIndex = 0;
