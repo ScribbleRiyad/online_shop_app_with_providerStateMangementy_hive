@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:online_shop/View/Shared/appStyle.dart';
 
 class MainScreen extends StatelessWidget {
@@ -26,7 +27,7 @@ class MainScreen extends StatelessWidget {
                     height: 36.00,
                     width: 36.00,
                     child: Icon(
-                      Icons.home,
+                      Ionicons.home,
                       color: Colors.white,
                     ),
                   ),
