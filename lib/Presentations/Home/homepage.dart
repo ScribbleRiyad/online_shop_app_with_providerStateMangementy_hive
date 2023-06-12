@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:online_shop/%20Widgets/appStyle.dart';
+import 'package:online_shop/Utils/appStyle.dart';
 import 'package:online_shop/Services/helper.dart';
-import '../../models/sneaker_model.dart';
-import 'Home_Widgets/home_widgets_male.dart';
+import '../../../models/sneaker_model.dart';
+import 'home_widgets_male.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

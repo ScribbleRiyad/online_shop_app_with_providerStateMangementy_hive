@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../ Widgets/appStyle.dart';
+import '../../Utils/appStyle.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});

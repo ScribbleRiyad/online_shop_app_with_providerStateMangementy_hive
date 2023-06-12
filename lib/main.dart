@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop/Provider/mainpage_provider.dart';
 import 'package:provider/provider.dart';
-import 'View/Presentations/mainpage.dart';
+
+import 'Presentations/Main/mainpage.dart';
 
 void main() {
   runApp(MultiProvider(providers: [

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:online_shop/%20Widgets/appStyle.dart';
+import 'package:online_shop/Utils/appStyle.dart';
 
 class ProductCart extends StatefulWidget {
   const ProductCart(

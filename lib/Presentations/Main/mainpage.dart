@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:online_shop/View/Presentations/cartpage.dart';
-import 'package:online_shop/View/Presentations/homepage.dart';
-import 'package:online_shop/View/Presentations/profilepage.dart';
-import 'package:online_shop/View/Presentations/searchpage.dart';
+
 import 'package:provider/provider.dart';
-import '../../ Widgets/custom_bottom_nav_bar.dart';
-import '../../Provider/mainpage_provider.dart';
+import '../../Utils/custom_bottom_nav_bar.dart';
+import '../../../Provider/mainpage_provider.dart';
+import '../Cart/cartpage.dart';
+import '../Home/homepage.dart';
+import '../Profile/profilepage.dart';
+import '../Search/searchpage.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({super.key});
