@@ -1,10 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop/%20Widgets/appStyle.dart';
-import 'package:online_shop/%20Widgets/product_card.dart';
 import 'package:online_shop/Services/helper.dart';
-
 import '../../models/sneaker_model.dart';
+import 'Home_Widgets/home_widgets_male.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,17 +20,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late Future<List<Sneakers>> _kids;
   void getMale() {
     _male = Helper().getMaleSneakers();
-    print(_male);
   }
 
   void getFemale() {
     _female = Helper().getFemaleSneakers();
-    print(_female);
   }
 
   void getkids() {
     _kids = Helper().getKidsSneakers();
-    print(_kids);
   }
 
   @override
@@ -60,15 +55,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       image: AssetImage("assets/images/top_image.png"),
                       fit: BoxFit.fill)),
               child: Container(
-                padding: const EdgeInsets.only(left: 6, bottom: 15),
+                padding: const EdgeInsets.only(left: 16, bottom: 15),
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Scribble Sneakers Collection",
+                      "Scribble Sneakers",
                       style: appStyleWithHt(
-                          30, Colors.white, FontWeight.bold, 1.5),
+                          32, Colors.white, FontWeight.bold, 1.5),
                     ),
                     TabBar(
                         padding: EdgeInsets.zero,
@@ -100,97 +95,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: Container(
                 padding: const EdgeInsets.only(left: 12),
                 child: TabBarView(controller: _tabController, children: [
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.405,
-                        child: FutureBuilder<List<Sneakers>>(
-                          future: _male,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<dynamic> snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
-                            } else if (snapshot.hasError) {
-                              return Text("has Error ${snapshot.hasError}");
-                            } else {
-                              final male = snapshot.data;
-                              return ListView.builder(
-                                itemCount: male!.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  final shoe = snapshot.data![index];
-                                  return ProductCart(
-                                      id: shoe.id,
-                                      category: shoe.category,
-                                      image: shoe.imageUrl[0],
-                                      name: shoe.name,
-                                      price: "\$${shoe.price}");
-                                },
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "New Collection",
-                                  style: appStyle(
-                                      16, Colors.black, FontWeight.bold),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Show All",
-                                      style: appStyle(
-                                          16, Colors.black, FontWeight.bold),
-                                    ),
-                                    const Icon(
-                                      Icons.arrow_right,
-                                      size: 32,
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.13,
-                            child: ListView.builder(
-                                itemCount: 6,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                  child: ,
-                                  );
-                                }),
-                          ),
-                        ],
-                      )
-                    ],
+                  HomeWidget(
+                    male: _male,
                   ),
-                  Column(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.45,
-                        color: Colors.amber,
-                      )
-                    ],
+                  HomeWidget(
+                    male: _female,
                   ),
-                  Column(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.45,
-                        color: Colors.amber,
-                      )
-                    ],
+                  HomeWidget(
+                    male: _kids,
                   ),
                 ]),
               ),
