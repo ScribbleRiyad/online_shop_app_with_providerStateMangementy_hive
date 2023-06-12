@@ -2,6 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop/%20Widgets/appStyle.dart';
 import 'package:online_shop/%20Widgets/product_card.dart';
+import 'package:online_shop/Services/helper.dart';
+
+import '../../models/sneaker_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +16,33 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late final TabController _tabController =
       TabController(length: 3, vsync: this);
+
+  late Future<List<Sneakers>> _male;
+  late Future<List<Sneakers>> _female;
+  late Future<List<Sneakers>> _kids;
+  void getMale() {
+    _male = Helper().getMaleSneakers();
+    print(_male);
+  }
+
+  void getFemale() {
+    _female = Helper().getFemaleSneakers();
+    print(_female);
+  }
+
+  void getkids() {
+    _kids = Helper().getKidsSneakers();
+    print(_kids);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getMale();
+    getFemale();
+    getkids();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,19 +104,33 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     children: [
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.405,
-                        child: ListView.builder(
-                            itemCount: 6,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return const ProductCart(
-                                id: '01',
-                                image:
-                                    'https://d326fntlu7tb1e.cloudfront.net/uploads/710d020f-2da8-4e9e-8cff-0c8f24581488-GV6674.webp',
-                                category: 'Mens Shoe',
-                                price: '\$200',
-                                name: 'Ultra Boost Z6',
+                        child: FutureBuilder<List<Sneakers>>(
+                          future: _male,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<dynamic> snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return Text("has Error ${snapshot.hasError}");
+                            } else {
+                              final male = snapshot.data;
+                              return ListView.builder(
+                                itemCount: male!.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  final shoe = snapshot.data![index];
+                                  return ProductCart(
+                                      id: shoe.id,
+                                      category: shoe.category,
+                                      image: shoe.imageUrl[0],
+                                      name: shoe.name,
+                                      price: "\$${shoe.price}");
+                                },
                               );
-                            }),
+                            }
+                          },
+                        ),
                       ),
                       Column(
                         children: [
@@ -124,28 +168,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 itemBuilder: (context, index) {
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(16)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.white,
-                                                blurRadius: 0.8,
-                                                offset: Offset(0, 1),
-                                                spreadRadius: 1),
-                                          ]),
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.12,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.28,
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            "https://d326fntlu7tb1e.cloudfront.net/uploads/58282ea3-b815-4d26-9f4f-382aa62f67cf-HP5404_a1.webp",
-                                      ),
-                                    ),
+                                  child: ,
                                   );
                                 }),
                           ),
