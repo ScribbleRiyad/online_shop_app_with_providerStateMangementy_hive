@@ -36,15 +36,15 @@ class _StaggerTileState extends State<StaggerTile> {
             ),
             Container(
               padding: const EdgeInsets.only(top: 10),
-              height: 70,
+              height: MediaQuery.of(context).size.height * 0.175,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.name,
                     style: appStyleWithHt(
-                      20,
+                      16,
                       Colors.black,
                       FontWeight.w700,
                       1,
@@ -53,7 +53,7 @@ class _StaggerTileState extends State<StaggerTile> {
                   Text(
                     widget.price,
                     style: appStyleWithHt(
-                      20,
+                      16,
                       Colors.black,
                       FontWeight.w500,
                       1,

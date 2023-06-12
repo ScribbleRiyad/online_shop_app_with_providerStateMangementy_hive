@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:online_shop/%20Widgets/staggertile.dart';
+import 'package:online_shop/models/sneaker_model.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
+import '../Services/helper.dart';
 import '../Utils/appStyle.dart';
 
 class ProductByCart extends StatefulWidget {
@@ -13,6 +18,30 @@ class _ProductByCartState extends State<ProductByCart>
     with TickerProviderStateMixin {
   late final TabController _tabController =
       TabController(length: 3, vsync: this);
+
+  late Future<List<Sneakers>> _male;
+  late Future<List<Sneakers>> _female;
+  late Future<List<Sneakers>> _kids;
+  void getMale() {
+    _male = Helper().getMaleSneakers();
+  }
+
+  void getFemale() {
+    _female = Helper().getFemaleSneakers();
+  }
+
+  void getkids() {
+    _kids = Helper().getKidsSneakers();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getMale();
+    getFemale();
+    getkids();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +63,7 @@ class _ProductByCartState extends State<ProductByCart>
                   Padding(
                     padding: const EdgeInsets.fromLTRB(6, 12, 16, 18),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -83,14 +112,46 @@ class _ProductByCartState extends State<ProductByCart>
                   top: MediaQuery.of(context).size.height * 0.2,
                   left: 16,
                   right: 12),
-              child: TabBarView(controller: _tabController, children: [
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  color: Colors.amber,
-                ),
-                Container(),
-                Container(),
-              ]),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
+                child: TabBarView(controller: _tabController, children: [
+                  FutureBuilder<List<Sneakers>>(
+                    future: _male,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text("has Error ${snapshot.hasError}");
+                      } else {
+                        final male = snapshot.data;
+                        return StaggeredGridView.countBuilder(
+                          scrollDirection: Axis.vertical,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 16,
+                          crossAxisCount: 2,
+                          staggeredTileBuilder: (index) => StaggeredTile.extent(
+                            (index % 2 == 0) ? 1 : 1,
+                            (index % 4 == 1 || index % 4 == 3)
+                                ? MediaQuery.of(context).size.height * 0.35
+                                : MediaQuery.of(context).size.height * 0.3,
+                          ),
+                          itemCount: male!.length,
+                          itemBuilder: (context, index) {
+                            final shoe = snapshot.data![index];
+                            return StaggerTile(
+                                imageUrl: shoe.imageUrl[0],
+                                name: shoe.name,
+                                price: shoe.price);
+                          },
+                        );
+                      }
+                    },
+                  ),
+                  Container(),
+                  Container(),
+                ]),
+              ),
             )
           ],
         ),
