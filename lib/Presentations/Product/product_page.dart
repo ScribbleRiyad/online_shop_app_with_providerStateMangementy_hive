@@ -4,9 +4,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:online_shop/models/sneaker_model.dart';
+import 'package:online_shop/services/helper.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/Product/product_provider.dart';
-import '../../Services/helper.dart';
 import '../../Utils/appStyle.dart';
 import '../../Utils/checkout_btn.dart';
 
@@ -73,7 +73,7 @@ class _ProductPageState extends State<ProductPage> {
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.pop(context);
-                                    productNotifier.shoeSize.clear();
+                                    productNotifier.shoeSizes.clear();
                                   },
                                   child: const Icon(
                                     AntDesign.close,
@@ -161,7 +161,7 @@ class _ProductPageState extends State<ProductPage> {
                                                                     CircleAvatar(
                                                                   radius: 5,
                                                                   backgroundColor: productNotifier
-                                                                              .activePage !=
+                                                                              .activepage !=
                                                                           index
                                                                       ? Colors
                                                                           .grey
@@ -197,7 +197,7 @@ class _ProductPageState extends State<ProductPage> {
                                               Text(
                                                 sneaker.name,
                                                 style: appStyle(
-                                                    24,
+                                                    26,
                                                     Colors.black,
                                                     FontWeight.bold),
                                               ),
@@ -206,7 +206,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   Text(
                                                     sneaker.category,
                                                     style: appStyle(
-                                                        16,
+                                                        18,
                                                         Colors.grey,
                                                         FontWeight.w500),
                                                   ),
@@ -219,7 +219,7 @@ class _ProductPageState extends State<ProductPage> {
                                                     direction: Axis.horizontal,
                                                     allowHalfRating: true,
                                                     itemCount: 5,
-                                                    itemSize: 16,
+                                                    itemSize: 18,
                                                     itemPadding:
                                                         const EdgeInsets
                                                                 .symmetric(
@@ -245,7 +245,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   Text(
                                                     "\$${sneaker.price}",
                                                     style: appStyle(
-                                                        18,
+                                                        20,
                                                         Colors.black,
                                                         FontWeight.w600),
                                                   ),
@@ -254,7 +254,7 @@ class _ProductPageState extends State<ProductPage> {
                                                       Text(
                                                         "Colors",
                                                         style: appStyle(
-                                                            18,
+                                                            20,
                                                             Colors.black,
                                                             FontWeight.w500),
                                                       ),
@@ -284,21 +284,21 @@ class _ProductPageState extends State<ProductPage> {
                                               Column(
                                                 children: [
                                                   Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Text(
                                                         "Select sizes",
                                                         style: appStyle(
-                                                            18,
+                                                            16,
                                                             Colors.black,
                                                             FontWeight.w600),
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 20,
                                                       ),
                                                       Text(
                                                         "View size guide",
                                                         style: appStyle(
-                                                            18,
+                                                            16,
                                                             Colors.grey,
                                                             FontWeight.w600),
                                                       ),
@@ -312,7 +312,7 @@ class _ProductPageState extends State<ProductPage> {
                                                     child: ListView.builder(
                                                         itemCount:
                                                             productNotifier
-                                                                .shoeSize
+                                                                .shoeSizes
                                                                 .length,
                                                         scrollDirection:
                                                             Axis.horizontal,
@@ -322,7 +322,7 @@ class _ProductPageState extends State<ProductPage> {
                                                             (context, index) {
                                                           final sizes =
                                                               productNotifier
-                                                                      .shoeSize[
+                                                                      .shoeSizes[
                                                                   index];
 
                                                           return Padding(
@@ -382,6 +382,12 @@ class _ProductPageState extends State<ProductPage> {
                                                                       .add(sizes[
                                                                           'size']);
                                                                 }
+                                                                print(
+                                                                    productNotifier
+                                                                        .sizes);
+                                                                productNotifier
+                                                                    .toggleCheck(
+                                                                        index);
                                                               },
                                                             ),
                                                           );
@@ -406,7 +412,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   sneaker.title,
                                                   maxLines: 2,
                                                   style: appStyle(
-                                                      22,
+                                                      20,
                                                       Colors.black,
                                                       FontWeight.w700),
                                                 ),
@@ -447,7 +453,7 @@ class _ProductPageState extends State<ProductPage> {
                                                         "price": sneaker.price,
                                                         "qty": 1
                                                       });
-
+                                                      print(sneaker.name);
                                                       productNotifier.sizes
                                                           .clear();
                                                       Navigator.pop(context);
