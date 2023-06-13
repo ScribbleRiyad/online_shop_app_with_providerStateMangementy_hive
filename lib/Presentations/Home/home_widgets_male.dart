@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop/models/sneaker_model.dart';
+import '../../ Widgets/product_by_cart.dart';
 import '../../Utils/appStyle.dart';
 import '../../../ Widgets/new_shoes.dart';
 import '../../../ Widgets/product_card.dart';
 
 class HomeWidget extends StatelessWidget {
-  const HomeWidget({super.key, required Future<List<Sneakers>> male})
+  const HomeWidget(
+      {super.key, required Future<List<Sneakers>> male, required this.tabIndex})
       : _male = male;
   final Future<List<Sneakers>> _male;
+  final int tabIndex;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,17 +54,27 @@ class HomeWidget extends StatelessWidget {
                     "New Collection",
                     style: appStyle(16, Colors.black, FontWeight.bold),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        "Show All",
-                        style: appStyle(16, Colors.black, FontWeight.bold),
-                      ),
-                      const Icon(
-                        Icons.arrow_right,
-                        size: 32,
-                      )
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductByCart(
+                                    tabIndex: tabIndex,
+                                  )));
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          "Show All",
+                          style: appStyle(16, Colors.black, FontWeight.bold),
+                        ),
+                        const Icon(
+                          Icons.arrow_right,
+                          size: 32,
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),

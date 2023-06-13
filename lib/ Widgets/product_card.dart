@@ -60,7 +60,7 @@ class _ProductCartState extends State<ProductCart> {
                       top: 10.00,
                       child: GestureDetector(
                         onTap: () {},
-                        child: const Icon(Icons.heart_broken),
+                        child: const Icon(Icons.favorite_outline),
                       ))
                 ],
               ),

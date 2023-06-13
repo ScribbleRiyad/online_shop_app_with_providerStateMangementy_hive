@@ -36,7 +36,7 @@ class _StaggerTileState extends State<StaggerTile> {
             ),
             Container(
               padding: const EdgeInsets.only(top: 10),
-              height: MediaQuery.of(context).size.height * 0.175,
+              height: MediaQuery.of(context).size.height * 0.15,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
