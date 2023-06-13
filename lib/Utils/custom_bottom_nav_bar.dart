@@ -3,7 +3,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:online_shop/Utils/bottomnav_icon.dart';
 import 'package:provider/provider.dart';
 
-import '../Provider/mainpage_provider.dart';
+import '../Provider/Main/mainpage_provider.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({super.key});

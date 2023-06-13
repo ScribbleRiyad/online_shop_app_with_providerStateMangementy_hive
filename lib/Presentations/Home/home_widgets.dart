@@ -31,12 +31,22 @@ class HomeWidget extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     final shoe = snapshot.data![index];
-                    return ProductCart(
-                        id: shoe.id,
-                        category: shoe.category,
-                        image: shoe.imageUrl[0],
-                        name: shoe.name,
-                        price: "\$${shoe.price}");
+                    return GestureDetector(
+                      onTap: () {
+                        // productNotifier.shoesSizes = shoe.sizes;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductPage(
+                                    id: shoe.id, category: shoe.category)));
+                      },
+                      child: ProductCart(
+                          id: shoe.id,
+                          category: shoe.category,
+                          image: shoe.imageUrl[0],
+                          name: shoe.name,
+                          price: "\$${shoe.price}"),
+                    );
                   },
                 );
               }

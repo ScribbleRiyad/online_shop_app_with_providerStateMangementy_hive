@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:online_shop/Provider/mainpage_provider.dart';
+import 'package:online_shop/Provider/Main/mainpage_provider.dart';
+import 'package:online_shop/Provider/Product/product_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'Presentations/Main/mainpage.dart';
@@ -7,6 +8,7 @@ import 'Presentations/Main/mainpage.dart';
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => MainPageProvider()),
+    ChangeNotifierProvider(create: (context) => ProductNotifier()),
   ], child: const OnlineShopApp()));
 }
 
