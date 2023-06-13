@@ -6,9 +6,12 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:online_shop/models/sneaker_model.dart';
 import 'package:online_shop/services/helper.dart';
 import 'package:provider/provider.dart';
+import '../../Const/const.dart';
+import '../../Provider/Favourite/favourite_provider.dart';
 import '../../Provider/Product/product_provider.dart';
 import '../../Utils/appStyle.dart';
 import '../../Utils/checkout_btn.dart';
+import '../Favourite/favourite.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id, required this.category});
@@ -23,7 +26,7 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   final PageController pageController = PageController();
   final _cartBox = Hive.box('cart_box');
-
+  final _favBox = Hive.box("fav_box");
   late Future<Sneakers> _sneaker;
 
   void getShoes() {
@@ -38,6 +41,24 @@ class _ProductPageState extends State<ProductPage> {
 
   Future<void> _createCart(Map<dynamic, dynamic> newCart) async {
     await _cartBox.add(newCart);
+  }
+
+  Future<void> _createFav(Map<String, dynamic> addFav) async {
+    await _favBox.add(addFav);
+    getFavourites();
+  }
+
+  getFavourites() {
+    final favData = _favBox.keys.map((key) {
+      final item = _favBox.get(key);
+      return {
+        "key": key,
+        "id": item['id'],
+      };
+    }).toList();
+    fav = favData.toList();
+    ids = fav.map((item) => item['id']).toList();
+    setState(() {});
   }
 
   @override
@@ -133,10 +154,42 @@ class _ProductPageState extends State<ProductPage> {
                                                         .height *
                                                     0.1,
                                                 right: 20,
-                                                child: const Icon(
-                                                  AntDesign.hearto,
-                                                  color: Colors.grey,
-                                                )),
+                                                child:
+                                                    Consumer<FavouriteNotifier>(
+                                                        builder: (context,
+                                                            favouriteNotifier,
+                                                            child) {
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      if (ids.contains(
+                                                          widget.id)) {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const FavouriteItem()));
+                                                      } else {
+                                                        _createFav({
+                                                          "id": sneaker.id,
+                                                          "category":
+                                                              sneaker.category,
+                                                          "name": sneaker.name,
+                                                          "imageUrl": sneaker
+                                                              .imageUrl[0],
+                                                          "price":
+                                                              sneaker.price,
+                                                        });
+                                                      }
+                                                    },
+                                                    child: ids
+                                                            .contains(widget.id)
+                                                        ? const Icon(
+                                                            AntDesign.heart)
+                                                        : const Icon(
+                                                            AntDesign.hearto),
+                                                  );
+                                                })),
                                             Positioned(
                                                 bottom: 0,
                                                 right: 0,

@@ -1,37 +1,3 @@
-// import 'package:flutter/material.dart';
-//
-// class ProductNotifier extends ChangeNotifier {
-//   int _activePage = 0;
-//   List<dynamic> _shoeSize = [];
-//   List<String> _sizes = [];
-//
-//   int get getActivePage => _activePage;
-//   set setActivePage(int newIndex) {
-//     _activePage = newIndex;
-//     notifyListeners();
-//   }
-//
-//   List<dynamic> get getShoeSizes => _shoeSize;
-//   set setShoeSizes(List<dynamic> newShoe) {
-//     _shoeSize = newShoe;
-//     notifyListeners();
-//   }
-//
-//   void toggleCheck(int index) {
-//     for (int i = 0; i < _shoeSize.length; i++) {
-//       if (i == index) {
-//         _shoeSize[i]['isSelected'] = !_shoeSize[i]['isSelected'];
-//       }
-//     }
-//     notifyListeners();
-//   }
-//
-//   List<String> get getSize => _sizes;
-//   set setSize(List<String> newSize) {
-//     _sizes = newSize;
-//     notifyListeners();
-//   }
-// }
 import 'package:flutter/material.dart';
 
 class ProductNotifier extends ChangeNotifier {

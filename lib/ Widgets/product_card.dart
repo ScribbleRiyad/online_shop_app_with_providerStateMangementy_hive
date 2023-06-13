@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:online_shop/Presentations/Favourite/favourite.dart';
 import 'package:online_shop/Utils/appStyle.dart';
 
 import '../Const/const.dart';
@@ -40,6 +42,7 @@ class _ProductCartState extends State<ProductCart> {
     }).toList();
     fav = favData.toList();
     ids = fav.map((item) => item['id']).toList();
+    setState(() {});
   }
 
   @override
@@ -79,8 +82,26 @@ class _ProductCartState extends State<ProductCart> {
                       right: 10.00,
                       top: 10.00,
                       child: GestureDetector(
-                        onTap: () {},
-                        child: const Icon(Icons.favorite_outline),
+                        onTap: () {
+                          if (ids.contains(widget.id)) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const FavouriteItem()));
+                          } else {
+                            _createFav({
+                              "id": widget.id,
+                              "category": widget.category,
+                              "name": widget.name,
+                              "imageUrl": widget.image,
+                              "price": widget.price,
+                            });
+                          }
+                        },
+                        child: ids.contains(widget.id)
+                            ? const Icon(AntDesign.heart)
+                            : const Icon(AntDesign.hearto),
                       ))
                 ],
               ),
