@@ -42,6 +42,7 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter_vector_icons: ^2.0.0
   flutter_rating_bar: ^4.0.1
+  hive_flutter: ^1.1.0
 
 
 

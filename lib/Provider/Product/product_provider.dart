@@ -9,8 +9,8 @@ class ProductNotifier extends ChangeNotifier {
   }
 
   List<dynamic> shoeSize = [];
-  List<dynamic> get ShoeSizes => shoeSize;
-  set ShoeSizes(List<dynamic> newShoe) {
+  List<dynamic> get shoeSizes => shoeSize;
+  set shoeSizes(List<dynamic> newShoe) {
     shoeSize = newShoe;
     notifyListeners();
   }
@@ -18,8 +18,16 @@ class ProductNotifier extends ChangeNotifier {
   void toggleCheck(int index) {
     for (int i = 0; i < shoeSize.length; i++) {
       if (i == index) {
-        shoeSize[index]['isSelected'] = !shoeSize[index]['isSelected'];
+        shoeSize[i]['isSelected'] = !shoeSize[i]['isSelected'];
       }
     }
+    notifyListeners();
+  }
+
+  List<String> sizes = [];
+  List<String> get shoeSizesList => sizes;
+  set shoeSizesList(List<String> newSize) {
+    sizes = newSize;
+    notifyListeners();
   }
 }

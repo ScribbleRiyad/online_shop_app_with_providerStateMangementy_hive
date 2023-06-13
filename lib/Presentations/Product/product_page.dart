@@ -2,11 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:online_shop/models/sneaker_model.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/Product/product_provider.dart';
 import '../../Services/helper.dart';
 import '../../Utils/appStyle.dart';
+import '../../Utils/checkout_btn.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id, required this.category});
@@ -20,7 +22,7 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   final PageController pageController = PageController();
-  // final _cartBox = Hive.box('cart_box');
+  final _cartBox = Hive.box('cart_box');
 
   late Future<Sneakers> _sneaker;
 
@@ -34,9 +36,9 @@ class _ProductPageState extends State<ProductPage> {
     }
   }
 
-  // Future<void> _createCart(Map<dynamic, dynamic> newCart) async {
-  //   await _cartBox.add(newCart);
-  // }
+  Future<void> _createCart(Map<dynamic, dynamic> newCart) async {
+    await _cartBox.add(newCart);
+  }
 
   @override
   void initState() {
@@ -71,7 +73,7 @@ class _ProductPageState extends State<ProductPage> {
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.pop(context);
-                                    // productNotifier.shoeSizes.clear();
+                                    productNotifier.shoeSize.clear();
                                   },
                                   child: const Icon(
                                     AntDesign.close,
@@ -195,7 +197,7 @@ class _ProductPageState extends State<ProductPage> {
                                               Text(
                                                 sneaker.name,
                                                 style: appStyle(
-                                                    40,
+                                                    24,
                                                     Colors.black,
                                                     FontWeight.bold),
                                               ),
@@ -204,7 +206,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   Text(
                                                     sneaker.category,
                                                     style: appStyle(
-                                                        20,
+                                                        16,
                                                         Colors.grey,
                                                         FontWeight.w500),
                                                   ),
@@ -217,7 +219,7 @@ class _ProductPageState extends State<ProductPage> {
                                                     direction: Axis.horizontal,
                                                     allowHalfRating: true,
                                                     itemCount: 5,
-                                                    itemSize: 22,
+                                                    itemSize: 16,
                                                     itemPadding:
                                                         const EdgeInsets
                                                                 .symmetric(
@@ -233,7 +235,7 @@ class _ProductPageState extends State<ProductPage> {
                                                 ],
                                               ),
                                               const SizedBox(
-                                                height: 20,
+                                                height: 10,
                                               ),
                                               Row(
                                                 mainAxisAlignment:
@@ -243,7 +245,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   Text(
                                                     "\$${sneaker.price}",
                                                     style: appStyle(
-                                                        26,
+                                                        18,
                                                         Colors.black,
                                                         FontWeight.w600),
                                                   ),
@@ -277,7 +279,7 @@ class _ProductPageState extends State<ProductPage> {
                                                 ],
                                               ),
                                               const SizedBox(
-                                                height: 20,
+                                                height: 10,
                                               ),
                                               Column(
                                                 children: [
@@ -286,7 +288,7 @@ class _ProductPageState extends State<ProductPage> {
                                                       Text(
                                                         "Select sizes",
                                                         style: appStyle(
-                                                            20,
+                                                            18,
                                                             Colors.black,
                                                             FontWeight.w600),
                                                       ),
@@ -296,7 +298,7 @@ class _ProductPageState extends State<ProductPage> {
                                                       Text(
                                                         "View size guide",
                                                         style: appStyle(
-                                                            20,
+                                                            18,
                                                             Colors.grey,
                                                             FontWeight.w600),
                                                       ),
@@ -395,9 +397,6 @@ class _ProductPageState extends State<ProductPage> {
                                                 endIndent: 10,
                                                 color: Colors.black,
                                               ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
                                               SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
@@ -407,13 +406,13 @@ class _ProductPageState extends State<ProductPage> {
                                                   sneaker.title,
                                                   maxLines: 2,
                                                   style: appStyle(
-                                                      26,
+                                                      22,
                                                       Colors.black,
                                                       FontWeight.w700),
                                                 ),
                                               ),
                                               const SizedBox(
-                                                height: 10,
+                                                height: 5,
                                               ),
                                               Text(
                                                 sneaker.description,
@@ -425,7 +424,7 @@ class _ProductPageState extends State<ProductPage> {
                                                     FontWeight.normal),
                                               ),
                                               const SizedBox(
-                                                height: 10,
+                                                height: 5,
                                               ),
                                               Align(
                                                 alignment:
