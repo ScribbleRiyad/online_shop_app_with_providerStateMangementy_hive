@@ -73,7 +73,7 @@ class _FavouriteItemState extends State<FavouriteItem> {
                         Radius.circular(12),
                       ),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.11,
+                        height: MediaQuery.of(context).size.height * 0.15,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             color: Colors.grey.shade100,
@@ -105,7 +105,7 @@ class _FavouriteItemState extends State<FavouriteItem> {
                                       Text(
                                         shoe['name'],
                                         style: appStyle(
-                                            24, Colors.black, FontWeight.bold),
+                                            16, Colors.black, FontWeight.bold),
                                       ),
                                       const SizedBox(
                                         height: 5,
@@ -113,7 +113,7 @@ class _FavouriteItemState extends State<FavouriteItem> {
                                       Text(
                                         shoe['category'],
                                         style: appStyle(
-                                            24, Colors.black, FontWeight.bold),
+                                            16, Colors.black, FontWeight.bold),
                                       ),
                                       const SizedBox(
                                         height: 5,
@@ -122,20 +122,23 @@ class _FavouriteItemState extends State<FavouriteItem> {
                                         children: [
                                           Text(
                                             shoe['price'],
-                                            style: appStyle(24, Colors.black,
+                                            style: appStyle(18, Colors.black,
                                                 FontWeight.bold),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: GestureDetector(
-                                              onTap: () {},
-                                              child: const Icon(Ionicons
-                                                  .heart_dislike_outline),
-                                            ),
-                                          )
+                                          const SizedBox(
+                                            width: 30,
+                                          ),
                                         ],
-                                      )
+                                      ),
                                     ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: const Icon(
+                                        Ionicons.heart_dislike_outline),
                                   ),
                                 )
                               ],
