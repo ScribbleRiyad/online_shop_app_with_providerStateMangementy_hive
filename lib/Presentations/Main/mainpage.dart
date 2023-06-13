@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_shop/Presentations/Favourite/favourite.dart';
 
 import 'package:provider/provider.dart';
 import '../../ Widgets/product_by_cart.dart';
@@ -14,8 +15,7 @@ class MainScreen extends StatelessWidget {
   List<Widget> pageList = [
     const HomePage(),
     const SearchPage(),
-    const HomePage(),
-    // const ProductByCart(tabIndex: null,),
+    const FavouriteItem(),
     CartPage(),
     const ProfilePage(),
   ];

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:online_shop/Utils/appStyle.dart';
+
+import '../Const/const.dart';
 
 class ProductCart extends StatefulWidget {
   const ProductCart(
@@ -21,10 +24,27 @@ class ProductCart extends StatefulWidget {
 }
 
 class _ProductCartState extends State<ProductCart> {
-  bool selected = true;
+  final _favBox = Hive.box("fav_box");
+  Future<void> _createFav(Map<String, dynamic> addFav) async {
+    await _favBox.add(addFav);
+    getFavourites();
+  }
+
+  getFavourites() {
+    final favData = _favBox.keys.map((key) {
+      final item = _favBox.get(key);
+      return {
+        "key": key,
+        "id": item['id'],
+      };
+    }).toList();
+    fav = favData.toList();
+    ids = fav.map((item) => item['id']).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool selected = true;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         8,
