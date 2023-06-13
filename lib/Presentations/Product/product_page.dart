@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:online_shop/models/sneaker_model.dart';
 import 'package:provider/provider.dart';
@@ -309,7 +310,7 @@ class _ProductPageState extends State<ProductPage> {
                                                     child: ListView.builder(
                                                         itemCount:
                                                             productNotifier
-                                                                .shoeSizes
+                                                                .shoeSize
                                                                 .length,
                                                         scrollDirection:
                                                             Axis.horizontal,
@@ -319,7 +320,7 @@ class _ProductPageState extends State<ProductPage> {
                                                             (context, index) {
                                                           final sizes =
                                                               productNotifier
-                                                                      .shoeSizes[
+                                                                      .shoeSize[
                                                                   index];
 
                                                           return Padding(
