@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:online_shop/Presentations/Favourite/favourite.dart';
 import 'package:online_shop/Utils/appStyle.dart';
-
-import '../Const/const.dart';
+import 'package:provider/provider.dart';
+import '../Provider/Favourite/favourite_provider.dart';
 
 class ProductCart extends StatefulWidget {
   const ProductCart(
@@ -26,27 +25,11 @@ class ProductCart extends StatefulWidget {
 }
 
 class _ProductCartState extends State<ProductCart> {
-  final _favBox = Hive.box("fav_box");
-  Future<void> _createFav(Map<String, dynamic> addFav) async {
-    await _favBox.add(addFav);
-    getFavourites();
-  }
-
-  getFavourites() {
-    final favData = _favBox.keys.map((key) {
-      final item = _favBox.get(key);
-      return {
-        "key": key,
-        "id": item['id'],
-      };
-    }).toList();
-    fav = favData.toList();
-    ids = fav.map((item) => item['id']).toList();
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
+    var favouriteNotifier =
+        Provider.of<FavouriteNotifier>(context, listen: true);
+    favouriteNotifier.getFavourites();
     bool selected = true;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
@@ -83,23 +66,24 @@ class _ProductCartState extends State<ProductCart> {
                       top: 10.00,
                       child: GestureDetector(
                         onTap: () {
-                          if (ids.contains(widget.id)) {
+                          if (favouriteNotifier.ids.contains(widget.id)) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         const FavouriteItem()));
                           } else {
-                            _createFav({
+                            favouriteNotifier.createFav({
                               "id": widget.id,
                               "category": widget.category,
                               "name": widget.name,
                               "imageUrl": widget.image,
                               "price": widget.price,
                             });
+                            setState(() {});
                           }
                         },
-                        child: ids.contains(widget.id)
+                        child: favouriteNotifier.ids.contains(widget.id)
                             ? const Icon(AntDesign.heart)
                             : const Icon(AntDesign.hearto),
                       ))

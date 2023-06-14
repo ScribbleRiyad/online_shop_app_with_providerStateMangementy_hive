@@ -6,7 +6,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:online_shop/models/sneaker_model.dart';
 import 'package:online_shop/services/helper.dart';
 import 'package:provider/provider.dart';
-import '../../Const/const.dart';
 import '../../Provider/Favourite/favourite_provider.dart';
 import '../../Provider/Product/product_provider.dart';
 import '../../Utils/appStyle.dart';
@@ -26,7 +25,6 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   final PageController pageController = PageController();
   final _cartBox = Hive.box('cart_box');
-  final _favBox = Hive.box("fav_box");
   late Future<Sneakers> _sneaker;
 
   void getShoes() {
@@ -43,24 +41,6 @@ class _ProductPageState extends State<ProductPage> {
     await _cartBox.add(newCart);
   }
 
-  Future<void> _createFav(Map<String, dynamic> addFav) async {
-    await _favBox.add(addFav);
-    getFavourites();
-  }
-
-  getFavourites() {
-    final favData = _favBox.keys.map((key) {
-      final item = _favBox.get(key);
-      return {
-        "key": key,
-        "id": item['id'],
-      };
-    }).toList();
-    fav = favData.toList();
-    ids = fav.map((item) => item['id']).toList();
-    setState(() {});
-  }
-
   @override
   void initState() {
     super.initState();
@@ -69,6 +49,9 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    var favouriteNotifier =
+        Provider.of<FavouriteNotifier>(context, listen: true);
+    favouriteNotifier.getFavourites();
     return Scaffold(
         body: FutureBuilder<Sneakers>(
             future: _sneaker,
@@ -161,8 +144,9 @@ class _ProductPageState extends State<ProductPage> {
                                                             child) {
                                                   return GestureDetector(
                                                     onTap: () {
-                                                      if (ids.contains(
-                                                          widget.id)) {
+                                                      if (favouriteNotifier.ids
+                                                          .contains(
+                                                              widget.id)) {
                                                         Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
@@ -170,7 +154,8 @@ class _ProductPageState extends State<ProductPage> {
                                                                     (context) =>
                                                                         const FavouriteItem()));
                                                       } else {
-                                                        _createFav({
+                                                        favouriteNotifier
+                                                            .createFav({
                                                           "id": sneaker.id,
                                                           "category":
                                                               sneaker.category,
@@ -180,9 +165,10 @@ class _ProductPageState extends State<ProductPage> {
                                                           "price":
                                                               sneaker.price,
                                                         });
+                                                        setState(() {});
                                                       }
                                                     },
-                                                    child: ids
+                                                    child: favouriteNotifier.ids
                                                             .contains(widget.id)
                                                         ? const Icon(
                                                             AntDesign.heart)
