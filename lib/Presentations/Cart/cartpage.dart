@@ -2,33 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:hive_flutter/adapters.dart';
+import 'package:online_shop/Presentations/Main/mainpage.dart';
+import 'package:online_shop/Provider/Cart/cart_provider.dart';
+import 'package:provider/provider.dart';
 import '../../Utils/appStyle.dart';
 import '../../Utils/checkout_btn.dart';
 
-class CartPage extends StatelessWidget {
-  CartPage({super.key});
-
-  final _cartBox = Hive.box('cart_box');
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    List<dynamic> cart = [];
-    final cartData = _cartBox.keys.map((key) {
-      final item = _cartBox.get(key);
-      return {
-        "key": key,
-        "id": item['id'],
-        "category": item['category'],
-        "name": item['name'],
-        "imageUrl": item['imageUrl'],
-        "price": item['price'],
-        "qty": item['qty'],
-        "sizes": item['sizes']
-      };
-    }).toList();
+  State<CartPage> createState() => _CartPageState();
+}
 
-    cart = cartData.reversed.toList();
+class _CartPageState extends State<CartPage> {
+  @override
+  Widget build(BuildContext context) {
+    var cartNotifier = Provider.of<CartNotifier>(context, listen: true);
+    cartNotifier.getCart();
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: Padding(
@@ -60,10 +51,10 @@ class CartPage extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.55,
                   child: ListView.builder(
-                      itemCount: cart.length,
+                      itemCount: cartNotifier.cart.length,
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
-                        final data = cart[index];
+                        final data = cartNotifier.cart[index];
                         return Padding(
                           padding: const EdgeInsets.all(8),
                           child: ClipRRect(
@@ -86,7 +77,7 @@ class CartPage extends StatelessWidget {
                               ),
                               child: Container(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.15,
+                                    MediaQuery.of(context).size.height * 0.125,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
                                     color: Colors.grey.shade100,
@@ -103,14 +94,49 @@ class CartPage extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(12),
-                                          child: CachedNetworkImage(
-                                            imageUrl: data['imageUrl'],
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.fill,
-                                          ),
+                                        Stack(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(12),
+                                              child: CachedNetworkImage(
+                                                imageUrl: data['imageUrl'],
+                                                width: 70,
+                                                height: 70,
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                            Positioned(
+                                                bottom: -2,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    cartNotifier.deleteCart(
+                                                        data['key']);
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                MainScreen()));
+                                                  },
+                                                  child: Container(
+                                                    width: 40,
+                                                    height: 30,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                            color: Colors.black,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              topRight: Radius
+                                                                  .circular(12),
+                                                            )),
+                                                    child: const Icon(
+                                                      AntDesign.delete,
+                                                      size: 20,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                )),
+                                          ],
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(

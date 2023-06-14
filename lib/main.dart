@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:online_shop/Provider/Cart/cart_provider.dart';
 import 'package:online_shop/Provider/Favourite/favourite_provider.dart';
 import 'package:online_shop/Provider/Main/mainpage_provider.dart';
 import 'package:online_shop/Provider/Product/product_provider.dart';
@@ -15,6 +16,7 @@ void main() async {
     ChangeNotifierProvider(create: (context) => MainPageProvider()),
     ChangeNotifierProvider(create: (context) => ProductNotifier()),
     ChangeNotifierProvider(create: (context) => FavouriteNotifier()),
+    ChangeNotifierProvider(create: (context) => CartNotifier()),
   ], child: const OnlineShopApp()));
 }
 

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:online_shop/Presentations/Main/mainpage.dart';
 import 'package:provider/provider.dart';
-
-import '../../Const/const.dart';
 import '../../Provider/Favourite/favourite_provider.dart';
 import '../../Utils/appStyle.dart';
 
@@ -123,7 +121,7 @@ class _FavouriteItemState extends State<FavouriteItem> {
                                     child: GestureDetector(
                                       onTap: () {
                                         favouriteNotifier.delete(shoe['key']);
-                                        ids.removeWhere(
+                                        favouriteNotifier.ids.removeWhere(
                                             (element) => element == shoe['id']);
                                         Navigator.push(
                                             context,

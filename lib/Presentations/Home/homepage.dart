@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:online_shop/Provider/Product/product_provider.dart';
 import 'package:online_shop/Utils/appStyle.dart';
-import 'package:online_shop/Services/helper.dart';
-import '../../../models/sneaker_model.dart';
+
+import 'package:provider/provider.dart';
+
 import 'home_widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,31 +17,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late final TabController _tabController =
       TabController(length: 3, vsync: this);
 
-  late Future<List<Sneakers>> _male;
-  late Future<List<Sneakers>> _female;
-  late Future<List<Sneakers>> _kids;
-  void getMale() {
-    _male = Helper().getMaleSneakers();
-  }
-
-  void getFemale() {
-    _female = Helper().getFemaleSneakers();
-  }
-
-  void getkids() {
-    _kids = Helper().getKidsSneakers();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getMale();
-    getFemale();
-    getkids();
-  }
-
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context, listen: true);
+    productNotifier.getMale();
+    productNotifier.getFemale();
+    productNotifier.getKids();
+
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: Center(
@@ -96,15 +80,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 padding: const EdgeInsets.only(left: 12),
                 child: TabBarView(controller: _tabController, children: [
                   HomeWidget(
-                    male: _male,
+                    male: productNotifier.male,
                     tabIndex: 0,
                   ),
                   HomeWidget(
-                    male: _female,
+                    male: productNotifier.female,
                     tabIndex: 1,
                   ),
                   HomeWidget(
-                    male: _kids,
+                    male: productNotifier.kids,
                     tabIndex: 2,
                   ),
                 ]),
